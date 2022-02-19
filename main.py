@@ -38,6 +38,15 @@ async def on_message(message):
     if user_message.lower()== '.timewaste':
         await message.channel.send(file=discord.File(r"C:\Users\ebaba\OneDrive - Technological University Dublin\School_Work\DISCORD_BOT\dotBot\vids\timer.mp4"))
         return
+    
+    if user_message.lower()== '.coinflip':
+        coin = random.randint(1,2)
+        if coin == 1:
+            await message.channel.send('heads')
+            return
+        else:
+            await message.channel.send('tails')
+            return
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
