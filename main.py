@@ -1,3 +1,4 @@
+import sys
 import discord
 import random
 import os
@@ -12,6 +13,7 @@ client = discord.Client()
 async def on_ready():
     """logs that the bot is online"""
     print('Successfully logged in as {0.user}'.format(client))
+    print(sys.version)
 
 @client.event
 async def on_message(message):
@@ -61,7 +63,7 @@ async def on_message(message):
     # Future plan: implement a for loop that allows for multiple user inputs after the first
     #              make the update grid its own function
     #              fix aestetics 
-    
+    #
     if user_message == '.tictactoe':
         background = ':blue_square:'':blue_square:'':blue_square:''\n'':blue_square:'':blue_square:'':blue_square:''\n'':blue_square:'':blue_square:'':blue_square:'
         x= ':regional_indicator_x:'
@@ -75,22 +77,31 @@ async def on_message(message):
             msg.content in ['1','2','3','4','5','6','7','8','9']
         
         try:
-            user_msg = await client.wait_for('message', check=check, timeout = 15.0)
+            pos = await client.wait_for('message', check=check, timeout = 30.0)
 
         except asyncio.TimeoutError: 
             await message.channel.send('bot timedout: No reply sent')
             return                                         
         
-        else:    
-            grid = list(background)
-            del grid[1:13]
-            grid[0] = x
-            background = ''.join(grid)
+        else:  
+            #
+            # the case should then call a functrion that returns the updated grid
+            # should break from the case and back into the loop to be reprompted for an input
+            #
+            """update_grid(pos,background,x,o)"""
             await message.channel.send(background)
 
     
                 
-
+"""def update_grid(pos,background,x,o):
+    postition = int(pos)
+    match postition:
+        case 1:
+            grid = list(background)
+            del grid[1:13]
+            grid[0] = x
+            background = ''.join(grid)
+            return background"""
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
