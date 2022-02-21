@@ -65,11 +65,20 @@ async def on_message(message):
     #              fix aestetics 
     #
     if user_message == '.tictactoe':
-        background = ':blue_square:'':blue_square:'':blue_square:''\n'':blue_square:'':blue_square:'':blue_square:''\n'':blue_square:'':blue_square:'':blue_square:'
+        background = [':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:']
         x= ':regional_indicator_x:'
         o= ':regional_indicator_o:'
-        await message.channel.send(background)
-        await message.channel.send('Please enter what postion you want to go to from 1-9')   
+
+        tile=''
+        for i in range(len(background)):
+            if i % 3 == 2:
+                tile += background[i]
+                tile +='\n'
+                if i==8:
+                    await message.channel.send(tile)   
+            else:
+                tile += background[i]
+  
         
 
         def check(msg):
@@ -77,8 +86,7 @@ async def on_message(message):
             msg.content in ['1','2','3','4','5','6','7','8','9']
         
         try:
-            pos = await client.wait_for('message', check=check, timeout = 30.0)
-
+            position = await client.wait_for('message', check=check, timeout = 30.0)
         except asyncio.TimeoutError: 
             await message.channel.send('bot timedout: No reply sent')
             return                                         
@@ -88,20 +96,15 @@ async def on_message(message):
             # the case should then call a functrion that returns the updated grid
             # should break from the case and back into the loop to be reprompted for an input
             #
-            """update_grid(pos,background,x,o)"""
-            await message.channel.send(background)
-
+            tile=''
+            for i in range(len(background)):
+                if i==2 or i==5 or i==8:
+                    tile += ' ' + background[i]
+                    await message.channel.send(tile)
+                    tile =''
+                else:
+                    tile += ' ' + background[i]
     
-                
-"""def update_grid(pos,background,x,o):
-    postition = int(pos)
-    match postition:
-        case 1:
-            grid = list(background)
-            del grid[1:13]
-            grid[0] = x
-            background = ''.join(grid)
-            return background"""
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
