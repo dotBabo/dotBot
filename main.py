@@ -54,7 +54,7 @@ async def on_message(message):
 
     if user_message== '.boo':
         tomato="🍅"
-        await message.channel.add_reaction(tomato)
+        await message.add_reaction(tomato)
         return
 
 
