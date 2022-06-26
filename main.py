@@ -51,7 +51,7 @@ async def on_message(message):
         else:
             await message.channel.send('tails')
             return
-    if message.author.id == '145553846012346369':
+    if ("bot")  in message.content:
         tomato= '🍅'
         await message.add_reaction(tomato)
 
