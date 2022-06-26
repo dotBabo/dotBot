@@ -51,9 +51,9 @@ async def on_message(message):
         else:
             await message.channel.send('tails')
             return
-    if ("bot")  in message.content:
-        tomato= '🍅'
-        await message.add_reaction(tomato)
+    if ("bot") in message.content:
+        tomato="🍅"
+        await message.channel.add_reaction(tomato)
 
 
 
