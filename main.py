@@ -53,7 +53,7 @@ async def on_message(message):
             return
 
     ROB = os.getenv("ROB")
-    if message.author.id == int(ROB):
+    if message.author.id == ROB:
         tomato = '🍅'
         await message.add_reaction(tomato)
         return
