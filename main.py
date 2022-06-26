@@ -4,7 +4,6 @@ import random
 import os
 import asyncio
 from dotenv import load_dotenv
-load_dotenv('---.env')
 
 
 client = discord.Client()
@@ -29,7 +28,7 @@ async def on_message(message):
     
     if message.channel.name == 'bot-command':
         if user_message.lower() == '.yo':
-            await message.channel.send('sup nerd')
+            await message.channel.send('sup nerd.')
             return
 
     if user_message == '.anywhere':
@@ -53,11 +52,11 @@ async def on_message(message):
             await message.channel.send('tails')
             return
 
-    if user_message== '.boo':
-        await message.channel.send('heads')
+    ROB = os.getenv("ROB")
+    if message.author.id == ROB:
+        tomato = '🍅'
+        await message.add_reaction(tomato)
         return
-
-
 
     #
     # Unfinished code below
@@ -72,12 +71,9 @@ async def on_message(message):
     #              fix aestetics 
     #
     if user_message == '.tictactoe':
-        game = 0
-        
         background = [':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:',':blue_square:']
         x= ':regional_indicator_x:'
         o= ':regional_indicator_o:'
-        count = 1
 
         tile=''
         for i in range(len(background)):
@@ -90,47 +86,24 @@ async def on_message(message):
                 tile += background[i]
   
         
-        while game == 0:
-            def check(msg):
-                return msg.author == message.author and msg.channel == message.channel and \
-                msg.content in ['1','2','3','4','5','6','7','8','9']
+
+        def check(msg):
+            return msg.author == message.author and msg.channel == message.channel and \
+            msg.content in ['1','2','3','4','5','6','7','8','9']
         
-            try:
-                position = await client.wait_for('message', check=check, timeout = 30.0)
-                pos = int(position.content)
-                print(pos)
-            except asyncio.TimeoutError: 
-                await message.channel.send('bot timedout: No reply sent')
-                return                                         
+        try:
+            position = await client.wait_for('message', check=check, timeout = 30.0)
+        except asyncio.TimeoutError: 
+            await message.channel.send('bot timedout: No reply sent')
+            return                                         
         
-            else:  
-                #
-                # the case should then call a functrion that returns the updated grid
-                # should break from the case and back into the loop to be reprompted for an input
-                #
-                placer= ''
-                if count % 2 == 1:
-                    placer = x
-                else:
-                    placer = o
-
-                if 0 < pos < 10 and background[pos -1] == ':blue_square:':
-                    background[pos -1] = placer
-                    print(background)
-
-                    tile=''
-                    for i in range(len(background)):
-                        if i % 3 == 2:
-                            tile += background[i]
-                            tile +='\n'
-                            if i==8:
-                                await message.channel.send(tile)   
-                                count+= 1
-                        else:
-                            tile += background[i]
-
-                if count > 9:
-                    game = 1
+        else:  
+            #
+            # the case should then call a functrion that returns the updated grid
+            # should break from the case and back into the loop to be reprompted for an input
+            #
+            pass
+    
 
 load_dotenv()
 TOKEN = os.getenv("TOKEN")
